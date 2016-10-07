@@ -17,61 +17,97 @@ namespace viz_labs
         public Form1()
         {
             InitializeComponent();
-            Init();
+
         }
 
-        private void Init()
-        {
-            simpleOpenGlControl1.InitializeContexts();
-
-            Glu.gluOrtho2D(0, 500, 0, 500); // description https://www.opengl.org/sdk/docs/man2/xhtml/gluOrtho2D.xml
-
-            Gl.glViewport(0, 0, this.simpleOpenGlControl1.Width, this.simpleOpenGlControl1.Height);// http://learnopengl.com/#!Getting-started/Coordinate-Systems
-            Gl.glMatrixMode(Gl.GL_PROJECTION);
-            Gl.glLoadIdentity();
-
-            Gl.glClearColor(0f, 0f, 0f, 0);
-
-            Gl.glMatrixMode(Gl.GL_PROJECTION);
-        }
-
-        private void simpleOpenGlControl1_Paint(object sender, PaintEventArgs e)
-        {
-            ////////////////////////////////////
-
-            Gl.glColor3d(1f, 0f, 0f);
-            Gl.glBegin(Gl.GL_LINES);
-
-            Gl.glVertex2d(10, 10);
-            Gl.glVertex2d(50, 100);
-
-            Gl.glColor3d(1f, 1f, 0f);
-
-            Gl.glVertex2d(50, 100);
-            Gl.glVertex2d(100, 300);
-
-            Gl.glEnd();
-            ////////////////////////////////////
-        }
+        float sMin;
+        float sMax;
+        float ds;
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = panel1.CreateGraphics();
-            g.FillRectangle(Brushes.White, 0, 0, panel1.Width, panel1.Height);
-            return;
-            g = panel1.CreateGraphics();
-            //g.DrawLine(Pens.Black, new Point(0, 0), new Point(30, 30));
-            ///////////////////////////////////////////////////////////////
-            g.FillRectangle(Brushes.Yellow, 30.0f, 30.0f, 500.0f, 500.0f);
-            ///////////////////////////////////////////////////////////////
-            Brush b = new LinearGradientBrush(
-                new Rectangle(0, 0, 500, 500),
-                Color.Red,
+            // FilleRectangle: x,y >> upper left corner of the rectangle
+
+            Brush b1 = new LinearGradientBrush(
+                     new Rectangle(0, 70, 55, 50),
+                     Color.Blue,
+                     Color.Green,
+                     LinearGradientMode.Horizontal);
+            g.FillRectangle(b1, 0, 70.0f, 55, 50.0f);
+
+            Brush b2 = new LinearGradientBrush(
+                new Rectangle(55, 70, 55, 50),
+                Color.Green,
+                Color.Yellow,
+                LinearGradientMode.Horizontal);
+            g.FillRectangle(b2, 55, 70.0f, 55, 50.0f);
+
+            Brush b3 = new LinearGradientBrush(
+                   new Rectangle(110, 70, 55, 50),
+                   Color.Yellow,
+                   Color.Orange,
+                   LinearGradientMode.Horizontal);
+            g.FillRectangle(b3, 110, 70.0f, 55, 50.0f);
+
+            Brush b4 = new LinearGradientBrush(
+                       new Rectangle(165, 70, 55, 50),
+                       Color.Orange,
+                       Color.Red,
+                       LinearGradientMode.Horizontal);
+            g.FillRectangle(b4, 165, 70.0f, 55, 50.0f);
+            ////////////////////
+            // discrete colors
+            Brush b5 = new LinearGradientBrush(
+                    new Rectangle(300, 70, 30, 50), // new x = x + width
+                Color.Blue,
                 Color.Blue,
                 LinearGradientMode.Horizontal);
 
-            g.FillRectangle(b, 0.0f, 0.0f, 500.0f, 500.0f);
-            // /////////////////////////////////////////////////////////////////
+            g.FillRectangle(b4, 300f, 70f, 30f, 50f);
+
+
+            Brush b6 = new LinearGradientBrush(
+                    new Rectangle(330, 70, 30, 50),
+                Color.Yellow,
+                Color.Yellow,
+                LinearGradientMode.Horizontal);
+
+            g.FillRectangle(b5, 330f, 70f, 30f, 50f);
+
+
+            Brush b7 = new LinearGradientBrush(
+                    new Rectangle(360, 70, 30, 50),
+                Color.Red,
+                Color.Red,
+                LinearGradientMode.Horizontal);
+
+            g.FillRectangle(b6, 360f, 70f, 30f, 50f);
         }
+
+        public Color ValueToColor(float val)
+        {
+            ds = (sMax - sMin) / 3;
+
+            if (val >= sMin && val < sMin + ds)
+                return Color.Red;
+            else if (val >= sMin + ds && val < (sMin + (2 * ds)))
+                return Color.Blue;
+            else if (val >= sMin + (2 * ds) && val < (sMin + (3 * ds)))
+                return Color.Yellow;
+            else
+                return Color.Black;
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            sMin = float.Parse(textBox2.Text);
+            sMax = float.Parse(textBox3.Text);
+            Color color = ValueToColor(float.Parse(textBox1.Text));
+            panel2.BackColor = color;
+           
+        }
+
     }
 }
