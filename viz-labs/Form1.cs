@@ -17,7 +17,6 @@ namespace viz_labs
         public Form1()
         {
             InitializeComponent();
-
         }
 
         float sMin;
@@ -100,13 +99,28 @@ namespace viz_labs
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void convert_Click(object sender, EventArgs e)
         {
-            sMin = float.Parse(textBox2.Text);
-            sMax = float.Parse(textBox3.Text);
-            Color color = ValueToColor(float.Parse(textBox1.Text));
-            panel2.BackColor = color;
-           
+            if(textBox1.Text.Length == 0 || textBox2.Text.Length == 0
+                || textBox3.Text.Length == 0)
+            {
+                MessageBox.Show("You need to Enter sMin, sMax and val",
+                    "Input Data Missing");
+            }
+            else
+            {
+                sMin = float.Parse(textBox2.Text);
+                sMax = float.Parse(textBox3.Text);
+                if (sMin > sMax)
+                {
+                    MessageBox.Show("sMin must be < sMax", "Error");
+                    textBox2.Clear();
+                    textBox3.Clear();
+                    return;
+                }
+                Color color = ValueToColor(float.Parse(textBox1.Text));
+               panel2.BackColor = color; 
+            }
         }
 
     }
