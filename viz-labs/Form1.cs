@@ -82,21 +82,28 @@ namespace viz_labs
                 LinearGradientMode.Horizontal);
 
             g.FillRectangle(b6, 360f, 70f, 30f, 50f);
+
+            radioButton1.Checked = true; // select discrete radio button by default
         }
 
         public Color ValueToColor(float val)
         {
-            ds = (sMax - sMin) / 3;
-
-            if (val >= sMin && val < sMin + ds)
-                return Color.Red;
-            else if (val >= sMin + ds && val < (sMin + (2 * ds)))
-                return Color.Blue;
-            else if (val >= sMin + (2 * ds) && val < (sMin + (3 * ds)))
-                return Color.Yellow;
-            else
-                return Color.Black;
-
+            if (radioButton1.Checked) // discrete
+            {
+                ds = (sMax - sMin) / 3;
+                if (val >= sMin && val < sMin + ds)
+                    return Color.Red;
+                else if (val >= sMin + ds && val < (sMin + (2 * ds)))
+                    return Color.Blue;
+                else if (val >= sMin + (2 * ds) && val < (sMin + (3 * ds)))
+                    return Color.Yellow;
+                else
+                    return Color.Black;
+            }
+            else // continuous
+            {
+                return Color.Aqua;
+            }
         }
 
         private void convert_Click(object sender, EventArgs e)
@@ -118,8 +125,7 @@ namespace viz_labs
                     textBox3.Clear();
                     return;
                 }
-                Color color = ValueToColor(float.Parse(textBox1.Text));
-               panel2.BackColor = color; 
+               panel2.BackColor = ValueToColor(float.Parse(textBox1.Text)); ; 
             }
         }
 

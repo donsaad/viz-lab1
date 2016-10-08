@@ -65,18 +65,20 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Tahoma", 9F);
             this.label2.Location = new System.Drawing.Point(372, 66);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 17);
+            this.label2.Size = new System.Drawing.Size(60, 18);
             this.label2.TabIndex = 1;
             this.label2.Text = "Discrete";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Tahoma", 9F);
             this.label1.Location = new System.Drawing.Point(51, 66);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(78, 17);
+            this.label1.Size = new System.Drawing.Size(79, 18);
             this.label1.TabIndex = 0;
             this.label1.Text = "Continuous";
             // 
@@ -112,7 +114,7 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Location = new System.Drawing.Point(216, 39);
+            this.panel2.Location = new System.Drawing.Point(210, 50);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(167, 79);
             this.panel2.TabIndex = 4;
@@ -207,9 +209,9 @@
             // 
             this.groupBox3.Controls.Add(this.panel2);
             this.groupBox3.Font = new System.Drawing.Font("Tahoma", 9F);
-            this.groupBox3.Location = new System.Drawing.Point(18, 422);
+            this.groupBox3.Location = new System.Drawing.Point(18, 393);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(589, 140);
+            this.groupBox3.Size = new System.Drawing.Size(589, 169);
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Output";
