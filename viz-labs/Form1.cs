@@ -27,34 +27,49 @@ namespace viz_labs
         {
             Graphics g = panel1.CreateGraphics();
             // FilleRectangle: x,y >> upper left corner of the rectangle
+            Rectangle[] rects = new Rectangle[5];
+            rects[0] = new Rectangle(30, 70, 50, 55);
+            rects[1] = new Rectangle(60, 70, 50, 55);
+            rects[2] = new Rectangle(90, 70, 50, 55);
+            rects[3] = new Rectangle(120, 70, 50, 55);
+            rects[4] = new Rectangle(150, 70, 50, 55);
 
-            Brush b1 = new LinearGradientBrush(
-                     new Rectangle(0, 70, 55, 50),
-                     Color.Blue,
-                     Color.Green,
-                     LinearGradientMode.Horizontal);
-            g.FillRectangle(b1, 0, 70.0f, 55, 50.0f);
-
-            Brush b2 = new LinearGradientBrush(
-                new Rectangle(55, 70, 55, 50),
+            g.DrawRectangles(Pens.Transparent, rects);
+            Brush b = new LinearGradientBrush(rects[0],
+                Color.Red,
                 Color.Green,
+                LinearGradientMode.Horizontal);
+            g.FillRectangle(b, rects[0]);
+
+            b = new LinearGradientBrush(rects[1],
+                Color.Green,
+                Color.Blue,
+                LinearGradientMode.Horizontal);
+            g.FillRectangle(b, rects[1]);
+
+            b = new LinearGradientBrush(rects[2],
+                Color.Blue,
                 Color.Yellow,
                 LinearGradientMode.Horizontal);
-            g.FillRectangle(b2, 55, 70.0f, 55, 50.0f);
+            g.FillRectangle(b, rects[2]);
+            b = new LinearGradientBrush(rects[2],
+                Color.Yellow,
+                Color.Orange,
+                LinearGradientMode.Horizontal);
+            g.FillRectangle(b, rects[2]);
 
-            Brush b3 = new LinearGradientBrush(
-                   new Rectangle(110, 70, 55, 50),
-                   Color.Yellow,
-                   Color.Orange,
-                   LinearGradientMode.Horizontal);
-            g.FillRectangle(b3, 110, 70.0f, 55, 50.0f);
+            b = new LinearGradientBrush(rects[3],
+                Color.Orange,
+                Color.Tomato,
+                LinearGradientMode.Horizontal);
+            g.FillRectangle(b, rects[3]);
 
-            Brush b4 = new LinearGradientBrush(
-                       new Rectangle(165, 70, 55, 50),
-                       Color.Orange,
-                       Color.Red,
-                       LinearGradientMode.Horizontal);
-            g.FillRectangle(b4, 165, 70.0f, 55, 50.0f);
+            b = new LinearGradientBrush(rects[4],
+                Color.Tomato,
+                Color.SkyBlue,
+                LinearGradientMode.Horizontal);
+            g.FillRectangle(b, rects[4]);
+
             ////////////////////
             // discrete colors
             Brush b5 = new LinearGradientBrush(
@@ -63,16 +78,16 @@ namespace viz_labs
                 Color.Blue,
                 LinearGradientMode.Horizontal);
 
-            g.FillRectangle(b4, 300f, 70f, 30f, 50f);
+            g.FillRectangle(b5, 300f, 70f, 30f, 50f);
 
 
             Brush b6 = new LinearGradientBrush(
                     new Rectangle(330, 70, 30, 50),
-                Color.Yellow,
-                Color.Yellow,
+                Color.Green,
+                Color.Green,
                 LinearGradientMode.Horizontal);
 
-            g.FillRectangle(b5, 330f, 70f, 30f, 50f);
+            g.FillRectangle(b6, 330f, 70f, 30f, 50f);
 
 
             Brush b7 = new LinearGradientBrush(
@@ -81,14 +96,14 @@ namespace viz_labs
                 Color.Red,
                 LinearGradientMode.Horizontal);
 
-            g.FillRectangle(b6, 360f, 70f, 30f, 50f);
+            g.FillRectangle(b7, 360f, 70f, 30f, 50f);
 
-            radioButton1.Checked = true; // select discrete radio button by default
+            radioDiscrete.Checked = true; // select discrete radio button by default
         }
 
         public Color ValueToColor(float val)
         {
-            if (radioButton1.Checked) // discrete
+            if (radioDiscrete.Checked) // discrete
             {
                 ds = (sMax - sMin) / 3;
                 if (val >= sMin && val < sMin + ds)
@@ -106,7 +121,8 @@ namespace viz_labs
             }
         }
 
-        private void convert_Click(object sender, EventArgs e)
+       
+        private void btnValToColor_Click(object sender, EventArgs e)
         {
             if(textBox1.Text.Length == 0 || textBox2.Text.Length == 0
                 || textBox3.Text.Length == 0)
@@ -126,6 +142,52 @@ namespace viz_labs
                     return;
                 }
                panel2.BackColor = ValueToColor(float.Parse(textBox1.Text)); ; 
+            }
+        }
+
+        private void btnColorToVal_Click(object sender, EventArgs e)
+        {
+            if (textBox2.Text.Length == 0 || textBox3.Text.Length == 0
+                || RBox.Text.Length == 0 || BBox.Text.Length == 0
+                || GBox.Text.Length == 0)
+            {
+                MessageBox.Show("You need to enter all values for sMin, sMax, R, G, B.",
+                    "Input Data Missing");
+            }
+            else
+            {
+                int cR = int.Parse(RBox.Text);
+                int cG = int.Parse(GBox.Text);
+                int cB = int.Parse(BBox.Text);
+                sMin = float.Parse(textBox2.Text);
+                sMax = float.Parse(textBox3.Text);
+                int interval = (int) (sMax - sMin) / 3;
+                if (radioDiscrete.Checked) // if discrete
+                {
+                    if (cR == Color.Blue.R && cG == Color.Blue.G && cB == Color.Blue.B)
+                    {
+                        outLabel.Text = sMin.ToString();
+                        outLabel.ForeColor = Color.FromArgb(cR, cG, cB);
+                    }
+                    else if (cR == Color.Green.R && cG == Color.Green.G && cB == Color.Green.B)
+                    {
+                        outLabel.Text = (sMin + interval).ToString();
+                        outLabel.ForeColor = Color.FromArgb(cR, cG, cB);
+                    }
+                    else if (cR == Color.Red.R && cG == Color.Red.G && cB == Color.Red.B)
+                    {
+                        outLabel.Text = (sMin + (interval * 2)).ToString();
+                        outLabel.ForeColor = Color.FromArgb(cR, cG, cB);
+                    }
+                    else
+                    {
+                        outLabel.Text = "OUT";
+                    }
+                }
+                else // continuous
+                {
+
+                }
             }
         }
 
